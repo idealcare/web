@@ -1,0 +1,48 @@
+.o_form_view {
+    > .o_form_sheet_bg > .o_form_sheet {
+         @media (max-width: @screen-xs-max) {
+             min-width: 0px; // allow thinner form_sheet width for smaller screens
+         }
+    }
+    .o_group {
+        &.o_inner_group > tbody > tr > td {
+            white-space: nowrap; // prevent td content from breaking into lines
+        }
+        // reduce form maximum columns for smaller screens
+        @media (max-width: @screen-xs-max) {
+            .o-generate-groups(12);
+            .o-generate-groups(@n, @i: 1) when (@i =< @n) {
+                .o_group_col_@{i} {
+                    width: 100%;
+                }
+                .o-generate-groups(@n, @i + 1);
+            }
+        }
+        // break field label into a separate line from field on small screens
+        @media (max-width: @screen-xs) {
+            &.o_inner_group {
+                display: block;
+                > tbody {
+                    display: block;
+                    > tr {
+                        margin-top: 8px;
+                        .o-flex-display();
+                        .o-flex-flow(row, wrap);
+                        > td {
+                            .o-flex(1, 0, auto);
+                            padding: 0;
+                            display: block;
+                            padding: 0;
+                            width: auto!important; // important is to override width fixed by element style on base
+                            max-width: 100%;
+                            &.o_td_label {
+                                border-right: 0;
+                                width: 94%!important; // keep 6% space on line to fit checkboxes
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
